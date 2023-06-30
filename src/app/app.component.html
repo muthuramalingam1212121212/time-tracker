@@ -1,0 +1,61 @@
+
+<header>
+  <div class="container">
+    <div class="head">
+      <a href=""><img src="https://open-frontend-bucket.s3.amazonaws.com/interviews/001/logo.svg"></a>
+      <div class="head-total"><span>Total Time Spend</span> <span>{{totalSpend}}</span></div>
+    </div>
+    
+  </div>
+</header>
+<section class="lay-first">
+  <div class="container">
+    <div class="main-card">
+    <div class="card-lay">
+​
+   
+    <div class=" card-1"  *ngFor="let record of records; let i = index">
+      
+      <div class="left-card">
+        <h3><h3>{{record.taskName}}</h3></h3>
+        <p class="history">History</p>
+        <p *ngIf="!record.endTime" >No History Found, Click on the start button to track the timer</p>
+        <p *ngIf="record.endTime">Started the timer at {{record.startTime | date: 'dd/MM/yyyy HH:mm:ss'}} (Active)</p>
+        <p *ngIf="record.endTime">Started the timer at {{record.startTime | date: 'dd/MM/yyyy HH:mm:ss'}} & Stopped at {{record.endTime | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
+      </div>
+      <div class="right-card">
+        <span class="time">{{ record.hours | number: '2.0' }}:{{ record.minutes | number: '2.0' }}:{{ record.seconds | number: '2.0' }}</span>
+        <button *ngIf="!record.timerActive" class="btn" (click)="startTimer(record)">Start</button>
+        <button *ngIf="record.timerActive" class="btn btn-stop" (click)="stopTimer(record)">Stop</button>
+        <span class="close" (click)="deleteRecord(i)">x</span>
+        
+      </div>
+    </div>
+  </div>
+  <div class="add-lay">
+    <span class="add"  (click)="addModal()">+</span> 
+  </div>
+         
+  </div>    
+  </div>
+​
+  
+  
+  
+    
+  
+​
+   
+</section>
+​
+<ng-container *ngIf="modalBox">
+  <div class="overlay" (click)="closeModal()"></div>
+  <div class="modal-span">
+    <form (submit)="addRecord()">
+      <label>Enter Your Task Name</label>
+      <input type="text" class="form-control" [(ngModel)]="taskName" name="taskName" placeholder="Enter your task name" />
+      <button type="submit" class="save btn">Save</button>
+    </form>
+  </div>
+ 
+</ng-container>
